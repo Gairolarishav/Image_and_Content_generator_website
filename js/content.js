@@ -46,7 +46,6 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 // Handle success response
-                response_html = response.replace("\n", "<br>")
                 console.log('Data submitted successfully:', response_html);
                 
                 $('#loadingMessage').hide();
