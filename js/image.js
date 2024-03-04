@@ -1,25 +1,3 @@
-//  Text Animation
-function consoleText(words, id) {
-    var target = document.getElementById(id);
-    var letterCount = 0;
-    var visible = true;
-
-    setInterval(function () {
-        var text = words[0].substring(0, letterCount);
-        target.innerHTML = text;
-        letterCount++;
-
-        if (letterCount === words[0].length + 1) {
-            letterCount = 0;
-            words.push(words.shift());
-        }
-    }, 200);
-
-}
-
-consoleText(['Generate Images With AI'], 'console');
-
-
 /// Ajax Form Submission
 $(document).ready(function() {
     // Handle form submission
