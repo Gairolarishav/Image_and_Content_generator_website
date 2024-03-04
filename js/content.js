@@ -46,14 +46,14 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 // Handle success response
-                console.log('Data submitted successfully:', response_html);
+                console.log('Data submitted successfully:', response);
                 
                 $('#loadingMessage').hide();
                 
                 // Create image cards for each URL in the response
                 var cardHtml = '<div class="col-sm-12">' +
                     '<div class="card px-3 text-dark font-weight-normal">' +
-                    '<h5 style="font-weight:400 !important;font-size:1rem !important">' + response_html + '</h5>' +
+                    '<h5 style="font-weight:400 !important;font-size:1rem !important">' + response + '</h5>' +
                     '</div>' +
                     '</div>';
                 $('#imageCardsContainer').append(cardHtml);
