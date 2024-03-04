@@ -89,7 +89,7 @@ $(document).ready(function() {
                 $('#imageCardsContainer').empty();
 
                 // Display error message
-                var errorMessage = xhr.responseJSON && xhr.responseJSON.detail ? xhr.responseJSON.detail : 'An error occurred';
+                var errorMessage = xhr.responseJSON && xhr.responseJSON.detail ? xhr.responseJSON.detail : 'Something went wrong try after few minutes';
                 var cardHtml = '<div class="col-sm-12">' +
                     '<div class="card px-3 text-dark font-weight-normal">' +
                     '<h5 style="font-weight:400 !important;font-size:1rem !important">' + errorMessage + '</h5>' +
