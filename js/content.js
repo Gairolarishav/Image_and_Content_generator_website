@@ -29,15 +29,10 @@ $(document).ready(function() {
 
         // Get form data
         var textInput = $('input[name="fname"]').val(); // Get text input value
-        var imageCount = $('#count').val(); // Get dropdown input value
-        var imageSize = $('#size').val(); // Get dropdown input value
-
 
         // Prepare data object
         var formData = {
             text: textInput,
-            count: imageCount,
-            size : imageSize
         };
 
         // Send AJAX request
