@@ -35,6 +35,9 @@ $(document).ready(function() {
             size : imagesize
         };
 
+        // Clear previous image cards
+        $('#imageCardsContainer').empty();
+
         // Show loading message
         $('#loadingMessage').show();
 
@@ -49,9 +52,6 @@ $(document).ready(function() {
                 console.log('Data submitted successfully:', response);
 
                 $('#loadingMessage').hide();
-                
-                // Clear previous image cards
-                $('#imageCardsContainer').empty();
 
                 // check if user enter input or not
                 if (response=='Please Enter something') {
