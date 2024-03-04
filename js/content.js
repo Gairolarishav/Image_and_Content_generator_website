@@ -35,6 +35,7 @@ $(document).ready(function() {
             text: textInput,
         };
 
+         // Clear previous image cards
          $('#imageCardsContainer').empty();
 
         // Send AJAX request
@@ -48,7 +49,6 @@ $(document).ready(function() {
                 response_html = response.replace("\n", "<br>")
                 console.log('Data submitted successfully:', response_html);
                 
-                // Clear previous image cards
                 $('#loadingMessage').hide();
                 
                 // Create image cards for each URL in the response
