@@ -35,6 +35,8 @@ $(document).ready(function() {
             text: textInput,
         };
 
+         $('#imageCardsContainer').empty();
+
         // Send AJAX request
         $.ajax({
             type: 'POST',
@@ -48,7 +50,6 @@ $(document).ready(function() {
                 
                 // Clear previous image cards
                 $('#loadingMessage').hide();
-                $('#imageCardsContainer').empty();
                 
                 // Create image cards for each URL in the response
                 var cardHtml = '<div class="col-sm-12">' +
