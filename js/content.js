@@ -6,27 +6,36 @@ $(document).ready(function() {
         $('#loadingMessage').show();
 
         // Get form data
-        var textInput = $('input[name="fname"]').val(); // Get text input value
+        var textInput = $('input[name="fname"]').val(); // Get text input text
 
         // Prepare data object
         var formData = {
             text: textInput,
         };
+        $('#imageCardsContainer').empty();
 
-         // Clear previous image cards
-         $('#imageCardsContainer').empty();
-
+        function escapeHtml(html) {
+            return html.replace(/<br><br>/g, "brbr")
+               .replace(/<br>/g, "br")
+               .replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/br/g, '<br>');
+            }       
         // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'https://image-generator-api-3jrs.onrender.com/content_generator',
+            url: 'http://localhost:8000/content_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
                 // Handle success response
                 console.log('Data submitted successfully:', response);
                 
+                // Clear previous image cards
                 $('#loadingMessage').hide();
+                response = escapeHtml(response)
+                console.log(response)
                 
                 // Create image cards for each URL in the response
                 var cardHtml = '<div class="col-sm-12">' +
@@ -49,5 +58,3 @@ $(document).ready(function() {
         });
     });
 });
-
-
