@@ -3,14 +3,10 @@ $(document).ready(function() {
     // Handle form submission
     $('#submitButton').click(function() {
         var textInput = $('input[name="fname"]').val(); // Get text input value
-        var imageCount = $('#count').val(); // Get dropdown input value
-        var imagesize = $('#size').val(); // Get dropdown input value
 
         // Prepare data object
         var formData = {
             text: textInput,
-            count: imageCount,
-            size : imagesize
         };
 
         // Clear previous image cards
