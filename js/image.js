@@ -24,7 +24,7 @@ $(document).ready(function() {
         // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000/image_generator',
+            url: 'https://image-generator-api-3jrs.onrender.com/image_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
