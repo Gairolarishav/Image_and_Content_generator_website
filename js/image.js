@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     $('#submitButton').click(function() {
         var textInput = $('input[name="fname"]').val(); // Get text input value
+
         
         $('.spin-loader').show()
         $('#submitButton').hide()
@@ -23,7 +24,7 @@ $(document).ready(function() {
         // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'https://image-and-content-generator-website.onrender.com//image_generator',
+            url: 'http://localhost:8000/image_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
@@ -84,4 +85,3 @@ $(document).ready(function() {
         });
     });
 });
-
