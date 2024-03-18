@@ -1,8 +1,5 @@
 /// Ajax Form Submission
 $(document).ready(function() {
-
-
-
     // Handle form submission
     $('#submitButton').show()
     $('.spin-loader').hide()
@@ -26,7 +23,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000/image_generator',
+            url: 'https://image-generator-api-3jrs.onrender.com/image_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),    
             success: function(response) {
