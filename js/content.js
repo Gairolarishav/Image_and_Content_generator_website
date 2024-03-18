@@ -1,17 +1,22 @@
 // Ajax Form Submission
 $(document).ready(function() {
     // Handle form submission
+    // Handle form submission
+    $('#submitButton').show()
+    $('.spin-loader').hide()
+
     function submitForm(){
-        // Show loading message
-        $('#loadingMessage').show();
-
-        // Get form data
-        var textInput = $('input[name="fname"]').val(); // Get text input text
-
+        var textInput = $('input[name="fname"]').val(); // Get text input value   
+        $('.spin-loader').show()
+        $('#submitButton').hide()
         // Prepare data object
         var formData = {
             text: textInput,
         };
+
+        // Show loading message
+        $('#loadingMessage').show();
+
         $('#imageCardsContainer').empty();
 
         function escapeHtml(html) {
@@ -31,9 +36,11 @@ $(document).ready(function() {
             success: function(response) {
                 // Handle success response
                 console.log('Data submitted successfully:', response);
+
+                $('#loadingMessage').hide(); 
+                $('.spin-loader').hide()
+                $('#submitButton').show()
                 
-                // Clear previous image cards
-                $('#loadingMessage').hide();
                 response = escapeHtml(response)
                 console.log(response)
                 
