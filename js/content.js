@@ -1,7 +1,7 @@
 // Ajax Form Submission
 $(document).ready(function() {
     // Handle form submission
-    $('#submitButton').click(function() {
+    function submitForm(){
         // Show loading message
         $('#loadingMessage').show();
 
@@ -56,5 +56,16 @@ $(document).ready(function() {
                 $('#imageCardsContainer').html('<div style="color: red;">Error: ' + error + '</div>');
             },
         });
+    };
+
+    $('#submitButton').click(function(event){
+        event.preventDefault();
+        submitForm();
+    })
+    $('input').keypress(function(event){
+        if (event.which == 13) { // Check if Enter key is pressed
+            event.preventDefault();
+            submitForm();
+        }
     });
 });
