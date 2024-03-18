@@ -206,6 +206,7 @@
                       </div>
                       <div class="text-center mt-3">
                         <!-- Center aligns the content -->
+                        <img src="/assets/img/spinner.gif" alt="" class='spin-loader' style="display: None;height: 75px;">
                         <button
                           type="button"
                           id="submitButton"
@@ -238,13 +239,14 @@
               </div>
               <div class="card-body pb-2">
                 <div
-                    id="loadingMessage"
-                    class="text-center mt-3"
-                    style="display: none"
-                  >
-                    Content are being loaded. Please wait...
-                  </div>
-                <div class="row" id="imageCardsContainer">
+                  id="loadingMessage"
+                  class="text-center mt-3"
+                  style="display: none"
+                >
+                  <p>Images are being loaded. Please wait...</p>
+                  <img src="/assets/img/loading-progress-bar.gif" alt="">
+                </div>
+                <div class="row" id="imageCardsContainer"></div>
                   
                 </div>
               </div>
