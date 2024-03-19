@@ -54,7 +54,7 @@ function sendImage() {
   // Send AJAX request
   $.ajax({
       type: 'POST',
-      url: 'http://localhost:8000/extractor/',
+      url: 'https://image-generator-api-myfirstimagepush-1.onrender.com/extractor/',
       processData: false, // Prevent jQuery from automatically processing data
       contentType: false, // Prevent jQuery from automatically setting contentType
       data: formData,
