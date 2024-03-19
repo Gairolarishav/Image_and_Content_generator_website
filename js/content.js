@@ -1,17 +1,22 @@
 // Ajax Form Submission
 $(document).ready(function() {
     // Handle form submission
-    $('#submitButton').click(function() {
-        // Show loading message
-        $('#loadingMessage').show();
+    // Handle form submission
+    $('#submitButton').show()
+    $('.spin-loader').hide()
 
-        // Get form data
-        var textInput = $('input[name="fname"]').val(); // Get text input text
-
+    function submitForm(){
+        var textInput = $('input[name="fname"]').val(); // Get text input value   
+        $('.spin-loader').show()
+        $('#submitButton').hide()
         // Prepare data object
         var formData = {
             text: textInput,
         };
+
+        // Show loading message
+        $('#loadingMessage').show();
+
         $('#imageCardsContainer').empty();
 
         function escapeHtml(html) {
@@ -25,15 +30,17 @@ $(document).ready(function() {
         // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000/content_generator',
+            url: 'https://image-generator-api-3jrs.onrender.com/content_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
                 // Handle success response
                 console.log('Data submitted successfully:', response);
+
+                $('#loadingMessage').hide(); 
+                $('.spin-loader').hide()
+                $('#submitButton').show()
                 
-                // Clear previous image cards
-                $('#loadingMessage').hide();
                 response = escapeHtml(response)
                 console.log(response)
                 
@@ -56,5 +63,16 @@ $(document).ready(function() {
                 $('#imageCardsContainer').html('<div style="color: red;">Error: ' + error + '</div>');
             },
         });
+    };
+
+    $('#submitButton').click(function(event){
+        event.preventDefault();
+        submitForm();
+    })
+    $('input').keypress(function(event){
+        if (event.which == 13) { // Check if Enter key is pressed
+            event.preventDefault();
+            submitForm();
+        }
     });
 });
