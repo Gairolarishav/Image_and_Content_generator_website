@@ -69,12 +69,15 @@ function sendImage() {
                   '</div>';
           $('#imageCardsContainer').append(cardHtml);
       },
-      error: function(xhr, status, error) {
+       error: function(xhr, status, error) {
           // Handle error
           console.error('Error submitting data:', error);
-          $('#loadingMessage').hide();
-          alert('Error: ' + error);
-          $('#loadingMessage').hide(); 
+          var cardHtml = '<div class="col-sm-12 p-0">' +
+                  '<div class="card px-3 text-dark font-weight-normal">' +
+                  '<h5 style="font-weight:400 !important;font-size:1rem !important">' + error + '</h5>' +
+                  '</div>' +
+                  '</div>';
+          $('#imageCardsContainer').append(cardHtml);
       }
   });
 }
