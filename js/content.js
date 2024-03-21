@@ -30,7 +30,7 @@ $(document).ready(function() {
         // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'https://image-generator-api-myfirstimagepush-1.onrender.com/content_generator',
+            url: 'https://image-generator-api-5h7w.onrender.com/content_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
