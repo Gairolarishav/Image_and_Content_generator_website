@@ -191,15 +191,25 @@
                       default.
                     </p>
                   </div>
-                  <div class="card-body">
+
+                  <!-- Model Seletor -->
+                  <div class="seelct-model px-4">
+                    <h4>Select Model</h4>
+                    <button id="DallButton" type="button" class="btn btn-light px-1" onclick="dalle()" style="width: 140px;margin-right:5px">Dall-E</button>
+                    <button id="StableButton" type="button" class="btn btn-light px-1" onclick="stable()" style="width: 140px;">Stable Diffusion</button>
+                  </div>
+                  
+                  <!-- DALL E Body  -->
+                  <div class="card-body Dall-E" style='display:none'>
                     <form id="regForm">
                       <div class="tab">
                         <h5>Input</h5>
                         <p>
                           <input
+                            id="dalle-input"
                             placeholder="enter which image you want to generate..."
                             oninput="this.className = ''"
-                            name="fname"
+                            name="dallename"
                             required
                             style="width: 100%"
                           />
@@ -211,9 +221,63 @@
 
                         <button
                           type="button"
-                          id="submitButton"
+                          id="DallSubmit"
                           class="btn btn-primary mb-0"
                           style="display: none"
+                        >
+                          Generate
+                        </button>
+
+                        <!-- Center aligned button -->
+                      </div>
+                    </form>
+                  </div>
+                   <!-- Stable Diffusion Body -->
+                  <div class="card-body Stable-Diffusion">
+                    <form id="regForm">
+                      <div class="tab">
+                        <h5>Input</h5>
+                        <p>
+                          <input
+                            id="stable-input"
+                            placeholder="enter which image you want to generate..."
+                            oninput="this.className = ''"
+                            name="stablename"
+                            required
+                            style="width: 100%"
+                          />
+                        </p>
+                      </div>
+                      <div class="dropdown">
+                        <h6>Style</h6>
+                        <select id='style' class="selectpicker show-tick" style="width: 150px;" onfocus='this.size=6;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                          <option>3d-model</option>
+                          <option>analog-film</option>
+                          <option>anime</option>
+                          <option>cinematic</option>
+                          <option>comic-book</option>
+                          <option>digital-art</option>
+                          <option>enhance</option>
+                          <option>fantasy-art</option>
+                          <option>isometric</option>
+                          <option>line-art</option>
+                          <option>low-poly</option>
+                          <option>modeling-compound</option>
+                          <option>neon-punk</option>
+                          <option>origami</option>
+                          <option>photographic</optilow-polyon>
+                          <option>pixel-art</option>
+                          <option>tile-texture</option>
+                        </select>                        
+                      </div>
+                      <div class="text-center mt-3 p-0">
+                        <!-- Center aligns the content -->
+                        <img src="/assets/img/spinner.gif" alt="" class='spin-loader' style="display: None;height: 75px;">
+
+                        <button
+                          type="button"
+                          id="StableSubmit"
+                          class="btn btn-primary mb-0"
                         >
                           Generate
                         </button>
