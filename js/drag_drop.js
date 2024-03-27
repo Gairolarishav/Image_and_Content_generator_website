@@ -20,6 +20,9 @@ function readURL(input) {
 }
 
 function removeUpload() {
+  // Clear the file input field by resetting its value
+  $('.file-upload-input').val('');
+  
   $('.file-upload-input').replaceWith($('.file-upload-input').clone());
   $('.file-upload-content').hide();
   $('.image-upload-wrap').show();
