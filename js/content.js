@@ -1,14 +1,13 @@
 // Ajax Form Submission
 $(document).ready(function() {
-    // Handle form submission
-    // Handle form submission
-    $('#submitButton').show()
-    $('.spin-loader').hide()
+    $('#submitButton').show();
+    $('.spin-loader').hide();
 
-    function submitForm(){
-        var textInput = $('input[name="fname"]').val(); // Get text input value   
-        $('.spin-loader').show()
-        $('#submitButton').hide()
+    function submitForm() {
+        var textInput = $('input[name="fname"]').val(); // Get text input value
+        $('.spin-loader').show();
+        $('#submitButton').hide();
+
         // Prepare data object
         var formData = {
             text: textInput,
@@ -21,12 +20,13 @@ $(document).ready(function() {
 
         function escapeHtml(html) {
             return html.replace(/<br><br>/g, "brbr")
-               .replace(/<br>/g, "br")
-               .replace(/&/g, "&amp;")
-               .replace(/</g, "&lt;")
-               .replace(/>/g, "&gt;")
-               .replace(/br/g, '<br>');
-            }       
+                .replace(/<br>/g, "br")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/br/g, '<br>');
+        }
+
         // Send AJAX request
         $.ajax({
             type: 'POST',
@@ -37,13 +37,17 @@ $(document).ready(function() {
                 // Handle success response
                 console.log('Data submitted successfully:', response);
 
-                $('#loadingMessage').hide(); 
-                $('.spin-loader').hide()
-                $('#submitButton').show()
+                $('#loadingMessage').hide();
+                $('.spin-loader').hide();
+                $('#submitButton').show();
                 
-                response = escapeHtml(response)
-                console.log(response)
-                
+                if (typeof response === 'object') {
+                    response = JSON.stringify(response); // Convert object to string if needed
+                }
+
+                response = escapeHtml(response);
+                console.log(response);
+
                 // Create image cards for each URL in the response
                 var cardHtml = '<div class="col-sm-12">' +
                     '<div class="card px-3 text-dark font-weight-normal">' +
@@ -58,18 +62,21 @@ $(document).ready(function() {
 
                 // Hide loading message
                 $('#loadingMessage').hide();
+                $('.spin-loader').hide();
+                $('#submitButton').show();
 
                 // Display error message
                 $('#imageCardsContainer').html('<div style="color: red;">Error: ' + error + '</div>');
             },
         });
-    };
+    }
 
-    $('#submitButton').click(function(event){
+    $('#submitButton').click(function(event) {
         event.preventDefault();
         submitForm();
-    })
-    $('input').keypress(function(event){
+    });
+
+    $('input').keypress(function(event) {
         if (event.which == 13) { // Check if Enter key is pressed
             event.preventDefault();
             submitForm();
