@@ -40,10 +40,6 @@ $(document).ready(function() {
                 $('#loadingMessage').hide();
                 $('.spin-loader').hide();
                 $('#submitButton').show();
-                
-                if (typeof response === 'object') {
-                    response = JSON.stringify(response); // Convert object to string if needed
-                }
 
                 response = escapeHtml(response);
                 console.log(response);
