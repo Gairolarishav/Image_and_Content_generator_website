@@ -1,198 +1,146 @@
-$('.Dall-E').show()
-$('.Stable-Diffusion').hide()
-$('#DallSubmit').show()
-$('.spin-loader').hide()
+let conversationHistory = [];
+
+function addToConversation(prompt, imageUrl, model) {
+    conversationHistory.push({ prompt, imageUrl, model });
+    updateConversationDisplay();
+}
+
+function updateConversationDisplay() {
+    const container = $('#conversationContainer');
+    container.empty();
+
+    conversationHistory.forEach((item, index) => {
+        const messageHtml = `
+            <div class="conversation-message">
+                <p><strong>${item.model} Prompt ${index + 1}:</strong> ${item.prompt}</p>
+                <img src="data:image/png;base64,${item.imageUrl}" alt="Generated image ${index + 1}" class="generated-image">
+                <a href="data:image/png;base64,${item.imageUrl}" download="${index}.png">
+                    <button class="btn btn-primary download-btn mt-2">Download</button>
+                </a>
+            </div>
+        `;
+        container.append(messageHtml);
+    });
+}
+
+function clearConversation() {
+    conversationHistory = [];
+    updateConversationDisplay();
+}
+
+$('.Dall-E').show();
+$('.Stable-Diffusion').hide();
+$('#DallSubmit').show();
+$('.spin-loader').hide();
 
 function dalle(){
-    $('.Dall-E').show()
-    $('.Stable-Diffusion').hide()
-    // Clear previous image cards
-    $('#imageCardsContainer').empty();
+    $('.Dall-E').show();
+    $('.Stable-Diffusion').hide();
     $('#dalle-input').val('');
+    clearConversation();
 }
 
 function stable(){
-    $('.Dall-E').hide()
-    $('.Stable-Diffusion').show()
-    $('#StableSubmit').show()
-    $('.spin-loader').hide()
-    // Clear previous image cards
-    $('#imageCardsContainer').empty();
+    $('.Dall-E').hide();
+    $('.Stable-Diffusion').show();
+    $('#StableSubmit').show();
+    $('.spin-loader').hide();
     $('#stable-input').val('');
-
+    clearConversation();
 }
 
 $(document).ready(function() {
-    // Handle form submission
     $('#DallSubmit').show();
     $('#StableSubmit').hide();
     $('.spin-loader').hide();
 
     function DallForm() {
-        var textInput = $('input[name="dallename"]').val(); // Get text input value   
+        var textInput = $('input[name="dallename"]').val();
         if (!textInput) {
             alert('Please enter something.');
-            return; // Stop form submission if input is empty
+            return;
         }
         $('.spin-loader').show();
         $('#DallSubmit').hide();
 
-        
-
-        // Prepare data object
         var formData = {
             text: textInput,
         };
-        console.log(formData)
+        console.log(formData);
 
-        // Show loading message
         $('#loadingMessage').show();
 
-        // Clear previous image cards
-        $('#imageCardsContainer').empty();
-
-        // Send AJAX request
         $.ajax({
             type: 'POST',
-            url: 'https://image-generator-api-5h7w.onrender.com/dalle_generator',
+            url: 'http://localhost:9000/dalle_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
-                // Handle success response
-                console.log('####################');
                 $('#loadingMessage').hide();
                 $('.spin-loader').hide();
                 $('#DallSubmit').show();
 
                 if (typeof response == 'string') {
-                    console.log('not a list :', response);
-                    var cardHtml = '<div class="col-sm-12">' +
-                        '<div class="card px-3 text-dark font-weight-normal">' +
-                        '<h5 style="font-weight:400 !important;font-size:1rem !important">' + response + '</h5>' +
-                        '</div>' +
-                        '</div>';
-                    $('#imageCardsContainer').append(cardHtml);
+                    addToConversation(textInput, '', 'DALL-E');
                 } else {
-                    // Create image cards for each URL in the response
-                    response.forEach(function(image, index) {
-                        console.log('list:', image);
-                        var cardHtml = '<div class="col-sm-3">' +
-                            '<div class="card">' +
-                            '<img src="data:image/png;base64,' + image + '" class="card-img-top" alt="...">' +
-                            '<div class="card-body">' +
-                            '<a href="data:image/png;base64,' + image + '" download="' + index + '.png"><button class="btn btn-primary download-btn">Download</button></a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                        $('#imageCardsContainer').append(cardHtml);
+                    response.forEach(function(image) {
+                        addToConversation(textInput, image, 'DALL-E');
                     });
                 }
             },
             error: function(xhr, status, error) {
-                // Handle error response
-                var errorMessage;
-                if (xhr.status === 403) {
-                    // Handle Bing blocking the prompt
-                    errorMessage = "Blocked the prompt. Please revise it and try again.";
-                } else {
-                    // Handle other errors (e.g., internal server error)
-                    errorMessage = "Internal Server Error";
-                }
-                // Hide loading message
+                var errorMessage = xhr.status === 403 ? "Blocked the prompt. Please revise it and try again." : "Internal Server Error";
                 $('#loadingMessage').hide();
                 $('.spin-loader').hide();
                 $('#DallSubmit').show();
-                var cardHtml = '<div class="col-sm-12">' +
-                    '<div class="card px-3 text-dark font-weight-normal">' +
-                    '<h5 style="font-weight:400 !important;font-size:1rem !important">' + errorMessage + '</h5>' +
-                    '</div>' +
-                    '</div>';
-                $('#imageCardsContainer').append(cardHtml);
+                addToConversation(textInput, '', 'DALL-E (Error)');
             }
         });
     };
 
     function StableForm() {
-        var textInput = $('input[name="stablename"]').val(); // Get text input value  
-        var styleInput = $('#style').val(); // Get text input value 
-        console.log(styleInput) 
+        var textInput = $('input[name="stablename"]').val();
+        var styleInput = $('#style').val();
+        console.log(styleInput);
         if (!textInput) {
             alert('Please enter something.');
-            return; // Stop form submission if input is empty
+            return;
         } 
         $('.spin-loader').show();
         $('#StableSubmit').hide();
 
-        // Prepare data object
         var formData = {
             text: textInput,
             style: styleInput
         };
-        console.log(formData)
+        console.log(formData);
 
-        // Show loading message
         $('#loadingMessage').show();
 
-        // Clear previous image cards
-        $('#imageCardsContainer').empty();
-
-        // Send AJAX request
         $.ajax({
             type: 'POST',
             url: 'https://image-generator-api-5h7w.onrender.com/stable_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
-                // Handle success response
-                console.log('####################');
                 $('#loadingMessage').hide();
                 $('.spin-loader').hide();
                 $('#StableSubmit').show();
 
                 if (typeof response == 'string') {
-                    console.log('not a list :', response);
-                    var cardHtml = '<div class="col-sm-12">' +
-                        '<div class="card px-3 text-dark font-weight-normal">' +
-                        '<h5 style="font-weight:400 !important;font-size:1rem !important">' + response + '</h5>' +
-                        '</div>' +
-                        '</div>';
-                    $('#imageCardsContainer').append(cardHtml);
+                    addToConversation(textInput, '', 'Stable Diffusion');
                 } else {
-                    // Create image cards for each URL in the response
-                    response.forEach(function(image, index) {
-                        console.log('list:', image);
-                        var cardHtml = '<div class="col-sm-3">' +
-                            '<div class="card">' +
-                            '<img src="data:image/png;base64,' + image + '" class="card-img-top" alt="...">' +
-                            '<div class="card-body">' +
-                            '<a href="data:image/png;base64,' + image + '" download="' + index + '.png"><button class="btn btn-primary download-btn">Download</button></a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                        $('#imageCardsContainer').append(cardHtml);
+                    response.forEach(function(image) {
+                        addToConversation(textInput, image, 'Stable Diffusion');
                     });
                 }
             },
             error: function(xhr, status, error) {
-                // Handle error response
-                var errorMessage;
-                if (xhr.status === 403) {
-                    // Handle Bing blocking the prompt
-                    errorMessage = "Blocked the prompt. Please revise it and try again.";
-                } else {
-                    // Handle other errors (e.g., internal server error)
-                    errorMessage = "Internal Server Error";
-                }
-                // Hide loading message
+                var errorMessage = xhr.status === 403 ? "Blocked the prompt. Please revise it and try again." : "Internal Server Error";
                 $('#loadingMessage').hide();
                 $('.spin-loader').hide();
                 $('#StableSubmit').show();
-                var cardHtml = '<div class="col-sm-12">' +
-                    '<div class="card px-3 text-dark font-weight-normal">' +
-                    '<h5 style="font-weight:400 !important;font-size:1rem !important">' + errorMessage + '</h5>' +
-                    '</div>' +
-                    '</div>';
-                $('#imageCardsContainer').append(cardHtml);
+                addToConversation(textInput, '', 'Stable Diffusion (Error)');
             }
         });
     };
@@ -207,7 +155,7 @@ $(document).ready(function() {
     });
 
     $('input').keypress(function(event) {
-        if (event.which == 13) { // Check if Enter key is pressed
+        if (event.which == 13) {
             event.preventDefault();
             if ($('.Dall-E').is(":visible")) {
                 DallForm();
@@ -217,4 +165,3 @@ $(document).ready(function() {
         }
     });
 });
-
