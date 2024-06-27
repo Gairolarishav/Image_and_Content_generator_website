@@ -10,23 +10,23 @@ function updateConversationDisplay() {
     container.empty();
 
     conversationHistory.forEach((item, index) => {
-        var messageHtml = '<div class="col-sm-3">' +
-                            '<div class="card">' +
-                            '<img src="data:image/png;base64,' + item.imageUrl + '" class="card-img-top" alt="...">' +
-                            '<div class="card-body">' +
-                            '<a href="data:image/png;base64,' + item.imageUrl + '" download="' + index + '.png"><button class="btn btn-primary download-btn">Download</button></a>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-        // const messageHtml = `
-        //     <div class="conversation-message">
-        //         <p><strong>${item.model} Prompt ${index + 1}:</strong> ${item.prompt}</p>
-        //         <img src="data:image/png;base64,${item.imageUrl}" alt="Generated image ${index + 1}" class="generated-image">
-        //         <a href="data:image/png;base64,${item.imageUrl}" download="${index}.png">
-        //             <button class="btn btn-primary download-btn mt-2">Download</button>
-        //         </a>
-        //     </div>
-        // `;
+        // var messageHtml = '<div class="col-sm-3">' +
+        //                     '<div class="card">' +
+        //                     '<img src="data:image/png;base64,' + item.imageUrl + '" class="card-img-top" alt="...">' +
+        //                     '<div class="card-body">' +
+        //                     '<a href="data:image/png;base64,' + item.imageUrl + '" download="' + index + '.png"><button class="btn btn-primary download-btn">Download</button></a>' +
+        //                     '</div>' +
+        //                     '</div>' +
+        //                     '</div>';
+        const messageHtml = `
+            <div class="conversation-message">
+                <p><strong>${item.model} Prompt ${index + 1}:</strong> ${item.prompt}</p>
+                <img src="data:image/png;base64,${item.imageUrl}" alt="Generated image ${index + 1}" class="generated-image">
+                <a href="data:image/png;base64,${item.imageUrl}" download="${index}.png">
+                    <button class="btn btn-primary download-btn mt-2">Download</button>
+                </a>
+            </div>
+        `;
         container.append(messageHtml);
     });
 }
