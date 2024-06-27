@@ -72,7 +72,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:9000/dalle_generator',
+            url: 'https://image-generator-api-5h7w.onrender.com/dalle_generator',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {
